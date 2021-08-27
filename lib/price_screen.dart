@@ -26,11 +26,21 @@ class _PriceScreenState extends State<PriceScreen> {
     return dropdownItems;
   }
 
+  List<Text> getPickerItems() {
+    List<Text> pickerItems = [];
+
+    for (String currency in currenciesList) {
+      pickerItems.add(Text(currency));
+    }
+    return pickerItems;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('🤑 Coin Translator'),
+        backgroundColor: Colors.lightBlue,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,21 +68,19 @@ class _PriceScreenState extends State<PriceScreen> {
             ),
           ),
           Container(
-              height: 150,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(bottom: 30.0),
-              color: Colors.lightBlue,
-              child: CupertinoPicker(
-                  backgroundColor: Colors.lightBlue,
-                  itemExtent: 32.0,
-                  onSelectedItemChanged: (selectedIndex) {
-                    print(selectedIndex);
-                  },
-                  children: [
-                    Text('USD'),
-                    Text('USD'),
-                    Text('USD'),
-                  ])),
+            height: 150,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(bottom: 30.0),
+            color: Colors.lightBlue,
+            child: CupertinoPicker(
+              backgroundColor: Colors.lightBlue,
+              itemExtent: 32.0,
+              onSelectedItemChanged: (selectedIndex) {
+                print(selectedIndex);
+              },
+              children: getPickerItems(),
+            ),
+          ),
         ],
       ),
     );
