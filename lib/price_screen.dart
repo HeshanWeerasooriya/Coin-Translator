@@ -16,6 +16,7 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = 'USD';
+  double? currencyValue;
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -56,12 +57,15 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
-  void getData() async {
+  Future getData() async {
     Response response = await get(Uri.parse(
         'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=2D82873E-7576-42EF-BC47-5D064ADCBD42'));
     var decodedData = jsonDecode(response.body);
     double price = decodedData['rate'];
-    print(price);
+    setState(() {
+      currencyValue = price;
+    });
+    return price;
   }
 
   @override
@@ -89,10 +93,10 @@ class _PriceScreenState extends State<PriceScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? USD',
+                  '1 BTC = $currencyValue USD',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
