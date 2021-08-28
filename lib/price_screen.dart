@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 import 'coin_data.dart';
 
@@ -52,6 +53,18 @@ class _PriceScreenState extends State<PriceScreen> {
       },
       children: pickerItems,
     );
+  }
+
+  void getData() async {
+    Response response = await get(Uri.parse(
+        'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=2D82873E-7576-42EF-BC47-5D064ADCBD42'));
+    print(response.body);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
   }
 
   @override
