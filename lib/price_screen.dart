@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -58,7 +59,9 @@ class _PriceScreenState extends State<PriceScreen> {
   void getData() async {
     Response response = await get(Uri.parse(
         'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=2D82873E-7576-42EF-BC47-5D064ADCBD42'));
-    print(response.body);
+    var decodedData = jsonDecode(response.body);
+    double price = decodedData['rate'];
+    print(price);
   }
 
   @override
